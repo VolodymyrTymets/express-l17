@@ -15,10 +15,8 @@ const { Router: router } = require('express');
  *
  * **/
 
-
 module.exports = (models, { config }) => {
   const api = router();
-
   api.get('/', (req, res, next) => {
     res.status(200).send({ message: 'hello world' });
   });
