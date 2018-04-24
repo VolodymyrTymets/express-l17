@@ -4,7 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const config = require('./config');
 const { MongoManager } = require('./src/mongo');
-
+const api = require('./src/api');
 const app = express();
 const mongoManager = new MongoManager(config);
 
@@ -17,6 +17,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 mongoManager.connect();
+
+app.use('/api/v1', api(config));
 
 
 // error handler
