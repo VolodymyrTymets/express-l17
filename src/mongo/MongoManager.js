@@ -12,6 +12,4 @@ class MongoManager {
   }
 }
 
-const mongoManager = new MongoManager();
-
-module.exports = { mongoManager };
+module.exports = { MongoManager };

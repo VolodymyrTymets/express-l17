@@ -1,3 +1,3 @@
-const { mongoManager } = require('./MongoManager');
+const { MongoManager } = require('./MongoManager');
 
-module.exports = { mongoManager };
+module.exports = { MongoManager };
