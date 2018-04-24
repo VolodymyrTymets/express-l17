@@ -1,14 +1,32 @@
+const { APIError, InternalServerError } = require('rest-api-errors');
 const { STATUS_CODES } = require('http');
+//const logger = require('../../logger');
 
+// eslint-disable-next-line
 const errorHandler = (err, req, res, next) => {
-  if (err) {
-    console.log(err)
+  const error = (err.status === 401 ||
+    err instanceof APIError) ? err : new InternalServerError();
+
+  if (process.env.NODE_ENV !== 'production') {
+    // eslint-disable-next-line
+    console.log('-----> Unknown server error...');
+    // todo: comment here for production
+    // eslint-disable-next-line
+    console.log(err);
   }
-  res
-    .status(500)
+
+
+  if (err.name === 'ValidationError') {
+    return res.status(405).json(err);
+  }
+
+  //logger.info('API error', { error: err });
+
+  return res
+    .status(error.status || 500)
     .json({
-      code: 500,
-      message: STATUS_CODES[500],
+      code: error.code || 500,
+      message: error.message || STATUS_CODES[error.status],
     });
 };
 
